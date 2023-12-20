@@ -4,7 +4,6 @@ import { Notes } from "../models/noteModel.js";
 export const getNotes = async(req,res)=>{
     try {
         const note = await Notes.find({})
-        
         res.status(200).json({
         success: true,
         note
@@ -19,7 +18,7 @@ export const getNotes = async(req,res)=>{
 export const getNote = async(req,res)=>{
     try {
         const {id}=req.params
-        const note = await Notes.findById({id})
+        const note = await Notes.findById({ _id : id})
         
         res.status(200).json({
         success: true,
@@ -36,7 +35,7 @@ export const updateNote = async(req,res)=>{
     try {
         const {id}=req.params
         const data = req.body
-        const note = await Notes.findByIdAndUpdate({id} ,data , {new:true} )
+        const note = await Notes.findByIdAndUpdate({_id:id} ,data , {new:true} )
         
         res.status(200).json({
         success: true,
@@ -52,7 +51,7 @@ export const updateNote = async(req,res)=>{
 export const addNote = async (req, res) => {
   try {
     const { note } = req.body;
-    console.log(note);
+ 
     await Notes.create({
       note,
     });
@@ -72,15 +71,19 @@ export const addNote = async (req, res) => {
 export const deletNote= async (req,res)=>{
     try {
         const {id} = req.params
-        await Notes.findByIdAndDelete({id})
+       
+        await Notes.findByIdAndDelete({_id:id})
         res.status(200).json({
             success: true,
             message: "delete note",
         })
+        
     } catch (error) {
         res.status(400).json({
             success: false,
             message: "somthing else , try again",
         })
+       
+      
     }
 }
