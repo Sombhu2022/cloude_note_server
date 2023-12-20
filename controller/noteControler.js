@@ -8,6 +8,7 @@ export const getNotes = async(req,res)=>{
         success: true,
         note
       });
+      
     } catch (error) {
         res.status(400).json({
             success: false,
